@@ -1,14 +1,120 @@
 beer_type_prediction
 ==============================
 
-The Beer Type Prediction project uses a custom neural network to predict the type of beer based on a user's rating criteria.
+The Beer Type Prediction project uses a trained Machine Learning Model to accurately predict a type of beer based on a finite set of review criteria.
+
 
 Installation process
 The main steps required for installing and executing this project are as follows:
 1) Clone the git repo
 2) Download the training data set
-3) Build and run the customer Docker image
+3) Build and run the custom Docker image to train models and run predictions
 4) Execute Jupyter notebook to train models and run predictions
+5) Build and run the custom Docker image to build an API to interact with the model
+6) Interact with API
+
+Setup the local Git repository
+------------
+
+Create a new folder to store this repository, eg: ~/Projects/nba-career-predict:
+
+<pre>
+cd ~
+mkdir Projects
+cd Projects
+</pre>
+
+To download all the necessary files and folders (apart from the datasets) run command <code>git clone</code>.
+
+<pre>git clone https://github.com/seanbwilliams/beer_type_prediction.git</pre>
+
+
+Install Train/Test Data
+------------
+
+Within your local repository main folder, create sub-folder 'data', and three other sub-folders within 'data':
+<pre>
+    |
+    ├── data
+    |   ├── external       <- The final prediction CSV output files for submission to Kaggle
+    │   ├── processed      <- The final, canonical data sets for modeling.
+    │   └── raw            <- The raw Train & Test raw datasets.
+</pre>
+
+<pre>
+cd beer_type_prediction
+mkdir data
+cd data
+mkdir external
+mkdir processed
+mkdir raw
+cd ..
+</pre>
+
+Download dataset from <a href="https://drive.google.com/file/d/1vYyJL_IB6KjKCxuk9kg4vIMPGTtoX8Ek/view?usp=sharing">Google Drive</a> and store in the local repository 'data\raw' folder.
+
+
+Build custom pytorch-notebook Docker image and run container
+------------
+
+This solution is using a customer docker image that ensures the required libraries and their versions are ready to go.
+
+Build the Docker image
+
+<pre>
+docker build -t pytorch-notebook:latest .
+</pre>
+
+
+Run the Docker image
+
+<pre>
+docker run  -dit --rm --name beer_type_prediction -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v {PWD}:/home/jovyan/work pytorch-notebook:latest 
+</pre>
+
+
+Execute Notebooks
+---------------
+
+Locate the URL in the Docker log, and paste it into a browser to launch Jupyter Lab
+
+<pre>docker logs --tail 50 beer_type_prediction</pre>
+
+Execute the notebooks in the following order:
+
+1. dataprep
+2. modelling
+3. pipeline
+
+
+Build custom beer-type-pred-fastapi Docker image and run container
+------------
+
+This solution is using a customer docker image to serve an API that interacts with the ML Model.
+
+Build the Docker image
+
+<pre>
+cd app
+docker build -t beer-type-pred-fastapi:latest .
+</pre>
+
+
+Run the Docker image
+
+<pre>
+docker run  -dit --rm --name beer_type_pred_fastapi -p 8080:80 beer-type-pred-fastapi:latest
+cd ..
+</pre>
+
+
+Interact with API
+---------------
+
+Click on the link below to interact with the ML model:
+
+<a href="http://127.0.0.1:8080/">Beer Type Prediction Project</a>
+
 
 Project Organization
 ------------
