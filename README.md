@@ -1,10 +1,11 @@
-beer_type_prediction
+The Beer Type Prediction Project
 ==============================
 
 The Beer Type Prediction project uses a trained Machine Learning Model to accurately predict a type of beer based on a finite set of review criteria.
 
 
 Installation process
+------------
 The main steps required for installing and executing this project are as follows:
 1) Clone the git repo
 2) Download the training data set
@@ -29,7 +30,7 @@ To download all the necessary files and folders (apart from the datasets) run co
 <pre>git clone https://github.com/seanbwilliams/beer_type_prediction.git</pre>
 
 
-Install Train/Test Data
+Install Train Data
 ------------
 
 Within your local repository main folder, create sub-folder 'data', and three other sub-folders within 'data':
